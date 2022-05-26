@@ -7,14 +7,17 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> targets;
-    private float spawnRate = 1f;
-    private int score;
-    public TextMeshProUGUI scoreText;
+    public ListList list = new ListList();
+    public List<Vector3> force;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI scoreText;
     public Button restartButton; 
     public bool isGameActive;
     public GameObject titleScreen;
     public int difficulty;
+    public static int targetsClicked;
+    private float spawnRate = 5f;
+    private int score;
 
     // Update is called once per frame
     IEnumerator SpawnTarget() { 
@@ -22,6 +25,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
             Instantiate(targets[index]);
+            IncreaseDifficulty();
         }
     }
 
@@ -39,13 +43,24 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(int difficulty)
     {
-        spawnRate /= difficulty;
         this.difficulty = difficulty;
         isGameActive = true;
         score = 0;
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
         titleScreen.gameObject.SetActive(false);
+    }
+
+    public void IncreaseDifficulty()
+    {
+        //https://www.desmos.com/calculator/1md3lan2e9
+        if (spawnRate > 1) {
+            if (targetsClicked < Mathf.PI * 6) {
+                spawnRate = -Mathf.Sin(0.08f * targetsClicked) * 4f + 5f;
+}
+        } else {
+            spawnRate = 1f;
+        }
     }
 
     public void RestartGame()

@@ -1221,11 +1221,20 @@ MonoBehaviour:
   - {fileID: 3594973827318823031, guid: 52759a59382d8314cbcf636107345e95, type: 3}
   - {fileID: 5394934011183266875, guid: 5d8535a19ed0dec4fbdbf6f3edd8e170, type: 3}
   - {fileID: 7379898171880041036, guid: 09c11ee615dfe6e4c94783f715d37cc7, type: 3}
-  scoreText: {fileID: 1597255882}
+  - {fileID: 8400675997903198035, guid: 51f4c3a4669627b4b97bb410b2a1a185, type: 3}
+  list:
+    listList:
+    - list:
+      - {fileID: 0}
+    - list: []
+    - list: []
+  force: []
   gameOverText: {fileID: 1518171163}
+  scoreText: {fileID: 1597255882}
   restartButton: {fileID: 209249588}
   isGameActive: 0
   titleScreen: {fileID: 1685827271}
+  difficulty: 0
 --- !u!1 &1423647323
 GameObject:
   m_ObjectHideFlags: 0

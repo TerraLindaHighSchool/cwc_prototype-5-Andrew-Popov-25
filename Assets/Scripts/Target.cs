@@ -41,6 +41,7 @@ public class Target : MonoBehaviour
             Destroy(gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             gameManager.UpdateScore(pointValue);
+            GameManager.targetsClicked++;
         }
         if (gameObject.CompareTag("Bad"))
             gameManager.gameOver();
