@@ -4,40 +4,61 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private GameManager gameManager;
-    private Rigidbody targetRb;
-    private float minSpeed = 12;
-    private float maxSpeed = 16;
-    private float maxTorque = 10;
-    private float xRange = 4;
-    private float ySpawnPos = -6;
+    protected GameManager gameManager;
+    protected Rigidbody targetRb;
+    protected float minSpeed = 12;
+    protected float maxSpeed = 16;
+    protected float maxTorque = 10;
+    protected float xRange = 4;
+    protected float ySpawnPos = -6;
     public int pointValue = 1;
+    public bool crate = false;
+    public bool crateObject = false;
     public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
     void Start()
     {
         targetRb = GetComponent<Rigidbody>();
-        targetRb.AddForce(RandomForce(), ForceMode.Impulse);
+        if (!crateObject)
+            targetRb.AddForce(RandomForce(), ForceMode.Impulse);
+        else 
+            targetRb.AddForce(RandomSmallForce(), ForceMode.Impulse);
+
         targetRb.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
-        transform.position = RandomSpawnPos();
+        if(!crateObject)
+            transform.position = RandomSpawnPos();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    Vector3 RandomForce() {
+    protected Vector3 RandomForce()
+    {
         return Vector3.up * Random.Range(minSpeed, maxSpeed);
     }
 
-    float RandomTorque() { 
+    Vector3 RandomSmallForce()
+    {
+        return Vector3.up * Random.Range(minSpeed / 2, maxSpeed / 3);
+    }
+
+    protected float RandomTorque()
+    {
         return Random.Range(-maxTorque, maxTorque);
     }
 
-    Vector3 RandomSpawnPos() {
+    protected Vector3 RandomSpawnPos()
+    {
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
     }
 
-    private void OnMouseDown() {
-        if(gameManager.isGameActive) { 
+    private void OnMouseDown()
+    {
+        if (gameManager.isGameActive)
+        {
+            if (crate)
+            {
+                SpawnTargetInCrate();
+            }
             Destroy(gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             gameManager.UpdateScore(pointValue);
@@ -47,11 +68,24 @@ public class Target : MonoBehaviour
             gameManager.gameOver();
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other)
+    {
         Destroy(gameObject);
         if (gameObject.CompareTag("Good"))
             if (other.CompareTag("Sensor"))
-                if(gameManager.difficulty > 1)
-                gameManager.gameOver();
+                if (gameManager.difficulty > 1)
+                    gameManager.gameOver();
+    }
+
+    private void SpawnTargetInCrate()
+    {
+        GameObject anchor = GameObject.Find("Anchor");
+        int index = Random.Range(0, gameManager.targets.Count);
+        //Instantiate(gameManager.targets[index], new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        GameObject inside = Instantiate(gameManager.targets[index], transform.position, Quaternion.identity, transform.parent);
+        Target targetScript = inside.GetComponent<Target>();
+        targetScript.crateObject = true;
+        inside.transform.position = transform.position;
+        inside.transform.forward = transform.forward;
     }
 }
