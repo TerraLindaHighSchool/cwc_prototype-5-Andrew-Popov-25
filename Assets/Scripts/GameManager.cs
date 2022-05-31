@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public static int targetsClicked;
     private float spawnRate = 5f;
     private int score = 0;
+    private int targetMaxIndex = 4;
+    public float powerupTimer;
 
     public void UpdateScore(int scoreToAdd) {
         score += scoreToAdd;
@@ -92,7 +94,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Index:" + index);
         foreach (GameObject gameObject in groupList.listList[index].list) {
             if(gameObject == null) {
-                Instantiate(targets[Random.Range(0, targets.Count)]);
+                Instantiate(targets[Random.Range(0, targetMaxIndex)]);
                 continue;
             }
             Instantiate(gameObject);
@@ -101,7 +103,7 @@ public class GameManager : MonoBehaviour
     
     public void SpawnTarget()
     {
-        int index = Random.Range(0, targets.Count);
+        int index = Random.Range(0, targetMaxIndex);
         Instantiate(targets[index]);
         IncreaseDifficulty();
     }

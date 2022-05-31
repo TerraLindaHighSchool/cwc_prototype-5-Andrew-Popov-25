@@ -13,8 +13,10 @@ public class Target : MonoBehaviour
     protected float ySpawnPos = -6;
     public int pointValue = 1;
     public bool crate = false;
+    public bool powerup = false;
     public bool crateObject = false;
     public ParticleSystem explosionParticle;
+    private float powerupTimer = 7f;
 
     // Start is called before the first frame update
     void Start()
@@ -55,20 +57,30 @@ public class Target : MonoBehaviour
     {
         if (gameManager.isGameActive)
         {
-            if (crate)
+            if (powerup)
             {
-                SpawnTargetInCrate();
+                gameManager.powerupTimer = 7f;
             }
+
+            if (crate)
+                SpawnTargetInCrate();
+
             Destroy(gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             gameManager.UpdateScore(pointValue);
             GameManager.targetsClicked++;
         }
-        if (gameObject.CompareTag("Bad"))
-            gameManager.gameOver();
+        if (gameObject.CompareTag("Bad")) {
+            if(gameManager.powerupTimer <= 0) {
+                gameManager.gameOver();
+                return;
+            }
+
+            gameManager.powerupTimer = 0;
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
         if (gameObject.CompareTag("Good"))
@@ -81,6 +93,8 @@ public class Target : MonoBehaviour
     {
         GameObject anchor = GameObject.Find("Anchor");
         int index = Random.Range(0, gameManager.targets.Count);
+        if (Random.Range(0, 3) == 4)
+            index = gameManager.targets.Count - 1;
         //Instantiate(gameManager.targets[index], new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
         GameObject inside = Instantiate(gameManager.targets[index], transform.position, Quaternion.identity, transform.parent);
         Target targetScript = inside.GetComponent<Target>();
