@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private float spawnRate = 5f;
     private int score = 0;
     private int targetMaxIndex = 4;
-    public float powerupTimer;
+    public bool powerupActive;
 
     public void UpdateScore(int scoreToAdd) {
         score += scoreToAdd;

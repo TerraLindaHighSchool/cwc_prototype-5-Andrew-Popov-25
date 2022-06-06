@@ -1258,7 +1258,7 @@ MonoBehaviour:
   isGameActive: 0
   titleScreen: {fileID: 1685827271}
   difficulty: 0
-  powerupTimer: 0
+  powerupActive: 0
 --- !u!1 &1423647323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,8 +1336,9 @@ GameObject:
   - component: {fileID: 1473193294}
   - component: {fileID: 1473193296}
   - component: {fileID: 1473193295}
+  - component: {fileID: 1473193297}
   m_Layer: 5
-  m_Name: Powerup Indicator
+  m_Name: Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1386,7 +1387,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1399,6 +1400,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473193293}
   m_CullTransparentMesh: 0
+--- !u!114 &1473193297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473193293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410459ca1951f7a4394447a8a2fc292f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingBar: {fileID: 1473193295}
+  speed: 8
+  fadeCanvas: 0
+  currentValue: 100
 --- !u!1 &1518171161
 GameObject:
   m_ObjectHideFlags: 0

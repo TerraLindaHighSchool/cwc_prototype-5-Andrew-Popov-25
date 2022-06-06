@@ -16,7 +16,7 @@ public class Target : MonoBehaviour
     public bool powerup = false;
     public bool crateObject = false;
     public ParticleSystem explosionParticle;
-    private float powerupTimer = 7f;
+    private RadialProgress radialProgress;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +30,7 @@ public class Target : MonoBehaviour
         targetRb.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
         if(!crateObject)
             transform.position = RandomSpawnPos();
+
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
@@ -59,7 +60,9 @@ public class Target : MonoBehaviour
         {
             if (powerup)
             {
-                gameManager.powerupTimer = 7f;
+                gameManager.powerupActive = true;
+                radialProgress = GameObject.Find("Canvas/Indicator").GetComponent<RadialProgress>();
+                radialProgress.currentValue = 100f;
             }
 
             if (crate)
@@ -71,12 +74,12 @@ public class Target : MonoBehaviour
             GameManager.targetsClicked++;
         }
         if (gameObject.CompareTag("Bad")) {
-            if(gameManager.powerupTimer <= 0) {
+            if(!gameManager.powerupActive) {
                 gameManager.gameOver();
                 return;
             }
 
-            gameManager.powerupTimer = 0;
+            gameManager.powerupActive = false;
         }
     }
 
