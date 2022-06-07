@@ -111,8 +111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 15
-  explosionParticle: {fileID: 2478549635105912040, guid: ec46c8c4a3cbc429382ee48bd9169b45,
-    type: 3}
+  crate: 0
+  powerup: 0
+  crateObject: 0
+  explosionParticles:
+  - {fileID: 2478549635105912040, guid: ec46c8c4a3cbc429382ee48bd9169b45, type: 3}
 --- !u!65 &6304346512815513016
 BoxCollider:
   m_ObjectHideFlags: 0

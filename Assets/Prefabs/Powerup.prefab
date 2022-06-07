@@ -98,8 +98,8 @@ MonoBehaviour:
   crate: 0
   powerup: 1
   crateObject: 0
-  explosionParticle: {fileID: 3199346384015752365, guid: 307229a5540374aae98859caad2128a3,
-    type: 3}
+  explosionParticles:
+  - {fileID: 2088871590894813759, guid: 99e77514f3bdedc449984e05dfb84ca6, type: 3}
 --- !u!54 &7854546882084457071
 Rigidbody:
   m_ObjectHideFlags: 0

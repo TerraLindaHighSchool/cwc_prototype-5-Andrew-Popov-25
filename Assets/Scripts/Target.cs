@@ -15,7 +15,7 @@ public class Target : MonoBehaviour
     public bool crate = false;
     public bool powerup = false;
     public bool crateObject = false;
-    public ParticleSystem explosionParticle;
+    public ParticleSystem[] explosionParticles;
     private RadialProgress radialProgress;
 
     // Start is called before the first frame update
@@ -69,7 +69,7 @@ public class Target : MonoBehaviour
                 SpawnTargetInCrate();
 
             Destroy(gameObject);
-            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            SpawnParticles();
             gameManager.UpdateScore(pointValue);
             GameManager.targetsClicked++;
         }
@@ -104,5 +104,13 @@ public class Target : MonoBehaviour
         targetScript.crateObject = true;
         inside.transform.position = transform.position;
         inside.transform.forward = transform.forward;
+    }
+
+    private void SpawnParticles()
+    {
+        foreach (ParticleSystem particle in explosionParticles)
+        {
+            Instantiate(particle, transform.position, particle.transform.rotation);
+        }
     }
 }
