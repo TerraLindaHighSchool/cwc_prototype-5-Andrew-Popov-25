@@ -22,11 +22,13 @@ public class GameManager : MonoBehaviour
     private int targetMaxIndex = 4;
     public bool powerupActive;
 
+    //Add score to current score
     public void UpdateScore(int scoreToAdd) {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
     }
 
+    //Makes the game end
     public void gameOver()
     {
         gameOverText.gameObject.SetActive(true);
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
     }
 
+    //Initialize GameManager
     public void StartGame(int difficulty)
     {
         this.difficulty = difficulty;
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
         scoreText.gameObject.SetActive(true);
     }
 
+    //Mathematical difficulty increase
     public void IncreaseDifficulty()
     {
         //https://www.desmos.com/calculator/1md3lan2e9
@@ -56,12 +60,14 @@ public class GameManager : MonoBehaviour
             spawnRate = 1.5f;
         }
     }
-
+    
+    //Reloads the scene
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
+    
+    //Manages target spawns
     IEnumerator SpawnManager()
     {
         while (isGameActive)
@@ -83,15 +89,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Spawns a crate
     public void SpawnCrate()
     {
         Instantiate(crate);
     }
+    
+    //Spawns a group of targets
     public void SpawnTargetGroup()
     {
         int index = Random.Range(0, groupList.listList.Count - 1);
 
-        Debug.Log("Index:" + index);
+        //Debug.Log("Index:" + index);
+        //Runthrough list and get stuff and stuff
         foreach (GameObject gameObject in groupList.listList[index].list) {
             if(gameObject == null) {
                 Instantiate(targets[Random.Range(0, targetMaxIndex)]);
@@ -101,6 +111,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    //Spawn a single target
     public void SpawnTarget()
     {
         int index = Random.Range(0, targetMaxIndex);
